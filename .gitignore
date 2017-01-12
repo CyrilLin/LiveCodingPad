@@ -5,7 +5,6 @@
 # Logs
 logs
 *.log
-npm-debug.log*
 
 # Runtime data
 pids
@@ -53,3 +52,4 @@ jspm_packages
 
 # End of https://www.gitignore.io/api/node
 .idea/
+bower_components/

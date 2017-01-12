@@ -3,9 +3,36 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/ot/dist/ot.js"></script>
+    <!-- Create a simple CodeMirror instance -->
+    <link rel="stylesheet" href="/stylesheets/codemirror.css">
+    <script src="/javascripts/codemirror.js"></script>
   </head>
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+    <textarea id="codeEditor"></textarea>
   </body>
+
+
+  <script>
+      var editor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
+          lineNumbers: true
+      });
+
+      var socket = io('http://localhost:3000');
+
+      socket.on('doc', function (data) {
+          init(data.str, data.revision, data.clients, new ot.SocketIOAdapter(socket));
+      });
+
+      function init (str, revision, clients, serverAdapter) {
+          editor.setValue(str);
+          window.cmClient = new ot.EditorClient(
+              revision, clients,
+              serverAdapter, new ot.CodeMirrorAdapter(editor)
+          );
+      }
+  </script>
 </html>
