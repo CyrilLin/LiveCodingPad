@@ -4,24 +4,24 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('livecodingpad:server');
-var http = require('http');
-var SocketBinder = require('../socket/binder');
+let app = require('./app');
+let debug = require('debug')('livecodingpad:server');
+let http = require('http');
+let SocketBinder = require('./socket/binder');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+let port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
-var socketBinder = new SocketBinder(server);
+let server = http.createServer(app);
+let socketBinder = new SocketBinder(server);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -38,7 +38,7 @@ socketBinder.bind();
  */
 
 function normalizePort(val) {
-  var port = parseInt(val, 10);
+  let port = parseInt(val, 10);
 
   if (isNaN(port)) {
     // named pipe
@@ -62,7 +62,7 @@ function onError(error) {
     throw error;
   }
 
-  var bind = typeof port === 'string'
+  let bind = typeof port === 'string'
     ? 'Pipe ' + port
     : 'Port ' + port;
 
@@ -86,8 +86,8 @@ function onError(error) {
  */
 
 function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
+  let addr = server.address();
+  let bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
